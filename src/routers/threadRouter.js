@@ -2,6 +2,7 @@ const express = require("express")
 const threadRouter = express()
 const jwt = require("jsonwebtoken")
 const Session = require("../models/sessionModel.js")
+const Thread = require("../models/threadModel.js")
 
 // threadRouter.get("/threads", (req, res) => {
 //     const token = req.cookies.token
@@ -16,21 +17,20 @@ const Session = require("../models/sessionModel.js")
 // })
 
 threadRouter.get("/api/threads", async (req, res) => {
-    // const sessionId = req.cookies?.session_id;
+    const sessionId = req.cookies?.session_id;
 
+    const { title, content } = req.body
+    const session = await Session.findById(sessionId)
 
-    // if (!sessionId) {
-    //     return res.send("Kamu tidak memiliki akses disini!")
-    // }
-    // const session = await Session.findOne({ _id: sessionId })
-    // // console.log(session);
+    const newThread = new Thread({
+        title, content, userId: session.userId
+    })
 
-    // if (!session) {
-    //     return res.send("Kamu tidak memiliki akses disini!")
+    const savedThread = await newThread.save()
 
-    // }
-    
     return res.send("Ini Data threads!")
 })
+
+
 
 module.exports = threadRouter

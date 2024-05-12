@@ -8,13 +8,11 @@ async function middleWare(req, res, next) {
         return res.send("Kamu tidak memiliki session, Kamu tidak memiliki akses disini!")
     }
     const session = await Session.findOne({ _id: sessionId })
-    // console.log(session);
 
     if (!session) {
         return res.send("Kamu tidak memiliki session, Kamu tidak memiliki akses disini!")
 
     }
-    console.log("Ini middleware");
     next()
 }
 

@@ -9,6 +9,8 @@ require("dotenv").config();
 async function handleLoginJWT(req, res) {
     const { email, password } = req.body
 
+    
+
     //- user dicari dari email
     const user = await User.findOne({ email })
     if (!user) res.status(404).json({ message: "account not found" })
@@ -90,7 +92,7 @@ async function handleLogOut(req, res) {
     console.log(session_id);
     await Session.findByIdAndDelete(session_id)
 
-    return res.send("Berhasil dihapus")
+    return res.send("Berhasil log Out")
 
 }
 
