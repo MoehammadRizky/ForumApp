@@ -1,8 +1,12 @@
 const express = require("express")
 const threadRouter = express()
-const jwt = require("jsonwebtoken")
+// const jwt = require("jsonwebtoken")
 const Session = require("../models/sessionModel.js")
 const Thread = require("../models/threadModel.js")
+const threadController = require("../controllers/threadController.js")
+
+
+//JWT
 
 // threadRouter.get("/threads", (req, res) => {
 //     const token = req.cookies.token
@@ -16,20 +20,13 @@ const Thread = require("../models/threadModel.js")
 //     }
 // })
 
-threadRouter.get("/api/threads", async (req, res) => {
-    const sessionId = req.cookies?.session_id;
 
-    const { title, content } = req.body
-    const session = await Session.findById(sessionId)
+// SESSION
 
-    const newThread = new Thread({
-        title, content, userId: session.userId
-    })
+threadRouter.post("/api/threads", threadController.handleCreateThread);
 
-    const savedThread = await newThread.save()
+threadRouter.get("/api/threads", threadController.handleGetThreads);
 
-    return res.send("Ini Data threads!")
-})
 
 
 

@@ -89,7 +89,6 @@ async function handleRegister(req, res) {
 async function handleLogOut(req, res) {
     // delete session
     const session_id = req.cookies?.session_id
-    console.log(session_id);
     await Session.findByIdAndDelete(session_id)
 
     return res.send("Berhasil log Out")
